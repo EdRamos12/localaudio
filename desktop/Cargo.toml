@@ -1,0 +1,23 @@
+[package]
+name = "localaudio"
+version = "0.1.0"
+edition = "2021"
+description = "Stream this computer's audio to an Android phone on the local network"
+
+[dependencies]
+anyhow = "1"
+ctrlc = "3"
+eframe = "0.31"
+libpulse-binding = "2"
+libpulse-simple-binding = "2"
+mdns-sd = "0.13"
+opus = "0.3"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+# ksni backend talks D-Bus directly, so no GTK event loop or system libraries are needed.
+tray-icon = { version = "0.25", default-features = false, features = ["ksni"] }
+
+[target.'cfg(windows)'.dependencies]
+wasapi = "0.25"
+tray-icon = "0.25"
+windows-sys = { version = "0.59", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging"] }
